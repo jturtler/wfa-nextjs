@@ -7,6 +7,7 @@ import {
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
 import { CiUser } from "react-icons/ci";
+import { useLoggedInContext } from '../contexts/loggedInContext';
 
 export default function LoginForm() {
   return (
@@ -65,9 +66,17 @@ export default function LoginForm() {
   );
 }
 
-function LoginButton() {
+function LoginButton( ) {
+
+  const { loggedIn, setLoggedIn } = useLoggedInContext();
+
+  const loginBtnClick = () => {
+    setLoggedIn( true );
+    console.log( 'logged In state set to true ');
+  };
+
   return (
-    <Button className="mt-4 w-full">
+    <Button className="mt-4 w-full" onClick={ (e) => { loginBtnClick(); } }>
       Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
     </Button>
   );

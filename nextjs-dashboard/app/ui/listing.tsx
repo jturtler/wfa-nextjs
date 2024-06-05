@@ -1,4 +1,7 @@
-export default function Page() {
+'use client';
+
+
+export default function Listing() {
 	return (
 	<div className="h-[100vh] overflow-hidden">
 <div className="divTopNav h-[30px] bg-blue-300 p-1 text-white">INFO</div>

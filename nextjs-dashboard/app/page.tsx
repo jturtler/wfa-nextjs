@@ -6,12 +6,15 @@ import Link from 'next/link';
 import LoginForm from './ui/login-form';
 import AppMain from './ui/appMain';
 import { LoggedInContextWrapper } from './contexts/loggedInContext';
+import { LoginUserContextWrapper } from './contexts/loginUserContext';
 
 export default function Page() {
   return (
     <main className="mainPage">
       <LoggedInContextWrapper>
-        <AppMain></AppMain>
+        <LoginUserContextWrapper>
+          <AppMain></AppMain>
+        </LoginUserContextWrapper>
       </LoggedInContextWrapper>    
     </main>
   );

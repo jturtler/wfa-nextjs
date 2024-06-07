@@ -4,6 +4,7 @@ import LoginForm from "./login-form";
 import Listing from "./listing";
 import { useState } from "react";
 import { useLoggedInContext } from "../contexts/loggedInContext";
+import { ClientListContextWrapper } from "../contexts/clientListContext";
 
 export default function AppMain() {
 
@@ -15,10 +16,11 @@ export default function AppMain() {
 	console.log( 'AppMain Rendering' );
 
 	return (
+		<ClientListContextWrapper>
 		<div className="divMain">
 			{
 				(loggedIn) ? (
-					<Listing></Listing>
+						<Listing></Listing>
 				) : (
 					<>
 						<div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">
@@ -31,5 +33,6 @@ export default function AppMain() {
 				)
 			}
 		</div>
+		</ClientListContextWrapper>
 	);
 }

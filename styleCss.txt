@@ -1,0 +1,69 @@
+<div class="divMainList m-1 grid gap-1 border-0 border-gray-400 md:grid-cols-2">
+  <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">1</div>
+  <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">2</div>
+  <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">3</div>
+  <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">4</div>
+</div>
+
+
+// -- More Items...
+
+<div class="h-[100vh] overflow-hidden">
+  <div class="divTopNav h-[30px] bg-blue-300 p-1 text-white">INFO</div>
+  <div class="divMiddleContent flex">
+    <div class="divSiceNav hidden w-10 bg-gray-700"></div>
+    <div class="divMainList m-1 grid h-[calc(100vh-68px)] flex-1 content-start gap-1 overflow-x-auto border-0 border-gray-400 md:grid-cols-2">
+      <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg text-gray-700">1</div>
+      <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">2</div>
+      <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">3</div>
+      <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">4</div>
+      <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">5</div>
+      <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">6</div>
+    </div>
+  </div>
+  <div class="divBottomTop h-[30px] bg-gray-900 p-1 text-xs text-white">Version 1.2.0</div>
+</div>
+
+
+w-[100%]
+grid-cols-[10%_80%_10%]
+animate-spin
+font-semibold
+
+fixed inset-0 bg-black bg-opacity-25 backgrop-blur-sm
+
+justify-center: Align the flex items at the center of the container:
+items-center: - 2nd axis
+
+
+<div class="h-[100vh] overflow-hidden">
+  <div class="divTopNav h-[30px] bg-blue-300 p-1 text-white">INFO</div>
+  <div class="divMiddleContent flex">
+    <div class="divSiceNav hidden w-10 bg-gray-700"></div>
+    <div class="divMainList m-1 grid h-[calc(100vh-68px)] flex-1 content-start gap-1 overflow-x-auto border-0 border-gray-400 md:grid-cols-2">
+      <div class="m-1 grid min-h-[100px] cursor-pointer grid-cols-[10%_80%_10%] gap-1 rounded-lg bg-gray-200 p-2 text-gray-700 shadow-lg hover:bg-blue-200">
+        <div class="flex items-center p-1 align-middle">
+          <img class="" src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="" title="" />
+        </div>
+        <div class="p-1">
+          <div class="min-h-[20px] font-semibold">Mark Tester</div>
+          <div class="min-h-[20px]">Last activity: Jun 06, 2024 - 22:46</div>
+          <div class="min-h-[20px]"></div>
+        </div>
+        <div class="flex items-center p-1 align-middle">
+          <img class="" src="https://cdn-icons-png.flaticon.com/512/3306/3306599.png" />
+        </div>
+      </div>
+      <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">2</div>
+      <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">3</div>
+      <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">4</div>
+      <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">5</div>
+      <div class="m-1 min-h-[100px] rounded-lg bg-gray-200 p-2 shadow-lg">6</div>
+    </div>
+  </div>
+  <div class="divBottomTop h-[30px] bg-gray-900 p-1 text-xs text-white">Version 1.2.0</div>
+</div>
+
+
+
+

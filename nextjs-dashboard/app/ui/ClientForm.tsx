@@ -8,13 +8,14 @@ import { CiEdit } from "react-icons/ci";
 import DateField from "./basics/DateField";
 import { Button } from "./button";
 import { useClients } from "../contexts/ClientContext";
+import { FaSpinner } from "react-icons/fa6";
 
 
 export default function ClientForm({ clientData = {} as JSONObject, handleCloseForm = () => { }}) {
 
-    const {list, error, saveClient} = useClients();
+    const {processing, error, saveClient} = useClients();
 
-
+   
 	// useEffect(() => {
 	// 	if (statusData.status == Constant.SAVE_CLIENT_SUCCESS) {
     //         if( clientData._id != undefined ) // For update an client, used in Details Client form
@@ -48,12 +49,10 @@ export default function ClientForm({ clientData = {} as JSONObject, handleCloseF
         setData( tempData );
     }
 
-    const handleOnSaveClick = async(e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log("====================== handleOnSaveClick");
+    const handleOnSaveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-         await saveClient(data);
-        console.log(list);
+        saveClient(data);
     }
 
     const handleOnCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -85,9 +84,11 @@ export default function ClientForm({ clientData = {} as JSONObject, handleCloseF
     return (
         <div className="w-full mx-auto mt-5 p-4 border border-gray-300 rounded-md shadow-md bg-white">
 
-            {/* {( statusData.status == Constant.SAVE_CLIENT_SUCCESS || statusData.status == Constant.SAVE_CLIENT_FAILURE )
-                && <Alert type={statusData.type} message={statusData.message} />} */}
-    {error != null &&  <Alert type={Constant.ALERT_TYPE_ERROR} message={error} />}
+            { processing == Constant.PROCESSING_CLIENT_DATA_SAVED && error == null 
+                && <Alert type={Constant.ALERT_TYPE_INFO} message="Client data is saved." />}
+
+            {error != null &&  <Alert type={Constant.ALERT_TYPE_ERROR} message={error} />}
+
             <div className="relative flex items-center p-5">
                 <h1 className="absolute left-1/2 transform -translate-x-1/2 text-2xl font-bold">{getTitle()}</h1>
                 {!allowToEdit && <div className="ml-auto">
@@ -131,11 +132,14 @@ export default function ClientForm({ clientData = {} as JSONObject, handleCloseF
 
           {allowToEdit && <div className="flex items-center justify-between">
 
-                <Button className="mt-4 w-full" onClick={ (e) => handleOnSaveClick(e) }>
-                    Save
+                <Button className="mt-4 w-2/5" onClick={ (e) => handleOnSaveClick(e) }>
+                    <span className="w-[200px]">Save</span> 
+                    
+                    { processing == Constant.PROCESSING_CLIENT_DATA_SAVING && 
+                        <FaSpinner className="ml-auto h-4 w-5 text-gray-50" /> }
                 </Button>
 
-                <Button className="mt-4 w-full" onClick={ (e) => handleOnCancelClick(e) }>
+                <Button className="mt-4 w-2/5 bg-yellow-500 text-center" style={{display: "inline"}} onClick={ (e) => handleOnCancelClick(e) }>
                     Cancel
                 </Button>
             </div>}

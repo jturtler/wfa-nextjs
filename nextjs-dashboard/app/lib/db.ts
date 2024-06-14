@@ -111,10 +111,13 @@ export const updateDocument = async(colectionName: string, payloadJson: JSONObje
 		// /* Set the upsert option to insert a document if no documents match the filter */
 		// const options = { upsert: true };
 		// Specify the update to set a value for the plot field
-		const updateDoc = { $set: payloadJson };
+		// Ensure the _id field is not included in the update data
+		let tempPayload = Utils.cloneJSONObject(payloadJson);
+		delete tempPayload._id;
+		const updateDoc = { $set: tempPayload };
 		// Update the first document that matches the filter
 		// const doc = await  db.collection(colectionName).updateOne(filter, updateDoc, options);
-		const doc = await  db.collection(colectionName).updateOne(filter, updateDoc);
+		const doc = await db.collection(colectionName).updateOne(filter, updateDoc);
 		 
 		return {
 			success: true,

@@ -22,7 +22,6 @@ const AuthContext = createContext<AuthContextProps>({
 	error: null,
 });
 
-// export const useAuth = () => useContext(AuthContext);
 export const useAuth = (): AuthContextProps => {
 	const context = useContext(AuthContext);
 	if (!context) {

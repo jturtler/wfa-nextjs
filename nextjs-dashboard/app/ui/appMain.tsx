@@ -10,8 +10,7 @@ export default function AppMain() {
 	const { user } = useAuth();
 
 	console.log( 'AppMain Rendering: ' );
-	console.log( user);
-
+	
 	return (
 		<div className="divMain">
 			{

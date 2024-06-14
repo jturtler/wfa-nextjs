@@ -1,13 +1,15 @@
 import { useState } from "react";
 import Modal from "./modal";
 import { FaHospitalUser } from "react-icons/fa";
+import { JSONObject } from "../lib/definitions";
+import * as Utils from "@/app/lib/utils";
 
-export default function ClientCard( {client}: {client: any}) {
+export default function ClientCard( {client}: {client: JSONObject}) {
 
 	const [ isVisible, setIsVisible ] = useState<boolean>(false);
 
-	const clientDetails = client.clientDetails;
-	const lastActivity = ( client.activities?.length > 0 ) ? client.activities[client.activities.length - 1] : undefined;
+	// const clientDetails = client.clientDetails;
+	const lastActivityDate = ( client.activities?.length > 0 ) ? Utils.formatDate(new Date(client.activities[client.activities.length - 1].date)) : ["[no activity]"];
 
 	const clientDetailModalClose = () => {
 		console.log( 'modal close called');
@@ -21,8 +23,10 @@ export default function ClientCard( {client}: {client: any}) {
 				<img className="" src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="" title="" />
 			</div>
 			<div className="p-1">
-				<div className="min-h-[20px] font-semibold">{clientDetails?.firstName + ' ' + clientDetails?.lastName}</div>
-				<div className="min-h-[20px]">Last activity: {lastActivity?.date?.updatedUTC}</div>
+				{/* <div className="min-h-[20px] font-semibold">{clientDetails?.firstName + ' ' + clientDetails?.lastName}</div>
+				<div className="min-h-[20px]">Last activity: {lastActivity?.date?.updatedUTC}</div> */}
+				<div className="min-h-[20px] font-semibold">{client.fullName}</div>
+				<div className="min-h-[20px]">Last activity: {lastActivityDate}</div>
 				<div className="min-h-[20px]"></div>
 			</div>
 			<div className="flex items-center p-1 align-middle">

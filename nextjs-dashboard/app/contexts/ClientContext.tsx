@@ -6,7 +6,7 @@ import * as api from '../lib/api';
 import { JSONObject, ResponseData } from '../lib/definitions';
 
 interface ClientContextProps {
-	list: JSONObject | null;
+	list: JSONObject[] | null;
     fetchClientList: () => Promise<void>;
     loading: boolean;
 	error: string | null;
@@ -22,7 +22,7 @@ const ClientContext = createContext<ClientContextProps>({
 export const useClients = () => useContext(ClientContext);
 
 export const ClientProvider = ({ children }: { children: ReactNode }) => {
-	const [list, setList] = useState<any>(null);
+	const [list, setList] = useState<JSONObject[] | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 
@@ -32,7 +32,9 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
 		try {
 			const responseData: ResponseData = await api.getClientList();
 			if (responseData.success) {
-                setList(list);
+				console.log("========= ClientProvider");
+				console.log(responseData.data);
+                setList(responseData.data);
             }
             else {
                 setList(null);

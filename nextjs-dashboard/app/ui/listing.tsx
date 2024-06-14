@@ -3,39 +3,52 @@
 import { useEffect, useState } from "react";
 import ClientCard from "./clientCard";
 import SectionTop from "./sectionTop";
+import { useClients } from "../contexts/ClientContext";
+import { JSONObject } from "../lib/definitions";
 
 export default function Listing() {
 
 	const [ clientList, setClientList ] = useState<Array<any>>([]);
 	//const clientList = [];
 
-	const getClientsList = () => {
-		fetch( 'clients.json', {
-			headers : { 
-				'Content-Type': 'application/json',
-				'Accept': 'application/json'
-			  }
-		}).then( function( resp ) {
-			console.log( resp );
-			return resp.json();
-		}).then( function( returnJson ) {
-			console.log( returnJson );
-			setClientList( returnJson );
-		});
-	};
+	// const getClientsList = () => {
+	// 	fetch( 'clients.json', {
+	// 		headers : { 
+	// 			'Content-Type': 'application/json',
+	// 			'Accept': 'application/json'
+	// 		  }
+	// 	}).then( function( resp ) {
+	// 		console.log( resp );
+	// 		return resp.json();
+	// 	}).then( function( returnJson ) {
+	// 		console.log( returnJson );
+	// 		setClientList( returnJson );
+	// 	});
+	// };
 
-	useEffect( () => {
-		getClientsList();
-	}, []);
+	// useEffect( () => {
+	// 	getClientsList();
+	// }, []);
 
+	const {list, fetchClientList} = useClients();
+	// useEffect(() => {
+		if( list == null ) {
+			fetchClientList();
+		}
+	// },[]);
 
+	
+
+	// const [ clientList, setClientList ] = useState(null);
+
+console.log(list);
 	return (
 	<div className="h-[100vh] overflow-hidden">
 		<SectionTop></SectionTop>
 		<div className="divMiddleContent flex">
 			<div className="divSiceNav w-10 hidden bg-gray-700 text-gray-300 p-1">m1</div>
 			<div className="divMainList m-1 grid h-[calc(100vh-68px)] flex-1 content-start gap-1 overflow-x-auto border-0 border-gray-400 md:grid-cols-2">
-				{ clientList?.map( (client, index) => (
+				{ list != null && list?.map( (client: JSONObject, index: number) => (
 					<ClientCard key={index} client={client}></ClientCard>
 				))
 				}

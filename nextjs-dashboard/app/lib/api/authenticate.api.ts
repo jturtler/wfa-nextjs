@@ -1,16 +1,12 @@
 "use server";
 
-import { mongoose } from "@/app/lib/db"; // Have to have this import so that we can connect database
-import { JSONObject } from "@/app/lib/definitions";
-import User  from '@/app/lib/schemas/User.schema';
+import { JSONObject, ResponseData } from "@/app/lib/definitions";
 import * as Utils from "../utils";
+import { findDocument } from "../db";
 
 export const checkLogin = async(username: string, pin: string): Promise<JSONObject | null> => {
     
-    const found = await User.find({
-        username,
-        pin
-    });
+    const response = await findDocument( "users", { username, pin } );
     
-    return ( found.length > 0 ) ? Utils.converDbObjectToJson(found[0]) : null;
+    return ( response.success!= null && response.data.length > 0 ) ? response.data[0] : null;
 }

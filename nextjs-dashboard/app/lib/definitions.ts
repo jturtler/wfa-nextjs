@@ -2,6 +2,9 @@
 export type JSONObject = { [key: string]: any };
 
 export type Message = {type: string, msg: string};
+
+
+
 export type CustomersTableType = {
   id: string;
   name: string;

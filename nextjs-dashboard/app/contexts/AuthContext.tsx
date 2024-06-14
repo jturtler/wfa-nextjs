@@ -7,7 +7,7 @@ import { checkLogin } from '../lib/api';
 import { JSONObject } from '../lib/definitions';
 
 interface AuthContextProps {
-	isAuthenticated: boolean;
+	// isAuthenticated: boolean;
 	user: JSONObject | null;
 	login: (username: string, pin: string) => Promise<void>;
 	loading: boolean;
@@ -15,7 +15,7 @@ interface AuthContextProps {
 }
 
 const AuthContext = createContext<AuthContextProps>({
-	isAuthenticated: false,
+	// isAuthenticated: false,
 	user: null,
 	login: async () => { },
 	loading: false,
@@ -25,7 +25,7 @@ const AuthContext = createContext<AuthContextProps>({
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+	// const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 	const [user, setUser] = useState<any>(null);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
@@ -34,26 +34,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		setLoading(true);
 		setError(null);
 		try {
+			// console.log("isAuthenticated 1: " + isAuthenticated );
 			const userData = await checkLogin(username, pin);
-			console.log(userData);
+			// console.log( " ---------------- 2: " +userData );
 			if (userData) { // Login successfully
-				setIsAuthenticated(true);
+				// setIsAuthenticated(true);
                 setUser(userData);
+				// console.log("---------------- 3: " + isAuthenticated );
             }
             else {
-                setIsAuthenticated(false);
+                // setIsAuthenticated(false);
 				setError("Login failed");
+				// console.log("---------------- 4: " + isAuthenticated );
             }
 
 		} catch (err) {
+			// setIsAuthenticated(false);
 			setError(Utils.getErrMessage(err));
+			// console.log("---------------- 5: " + isAuthenticated );
 		} finally {
 			setLoading(false);
+			// console.log("---------------- 6: " + isAuthenticated );
 		}
 	};
-
+	// console.log("======== 7: " + isAuthenticated );
 	return (
-		<AuthContext.Provider value={{ isAuthenticated, user, login, loading, error }}>
+		<AuthContext.Provider value={{ user, login, loading, error }}>
 			{children}
 		</AuthContext.Provider>
 	);

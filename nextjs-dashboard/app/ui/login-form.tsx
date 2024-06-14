@@ -1,23 +1,18 @@
 import { lusitana } from '@/app/ui/fonts';
-import {
-  AtSymbolIcon,
-  KeyIcon,
-  ExclamationCircleIcon,
-} from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
 import { CiUser } from "react-icons/ci";
-// import { useLoggedInContext } from '../contexts/loggedInContext';
-// import { useLoginUserContext } from '../contexts/loginUserContext';
 import { useAuth } from '../contexts/AuthContext';
-// import { useState } from 'react';
+import { useState } from 'react';
+import { FaSpinner } from 'react-icons/fa';
+import { IoKeyOutline } from "react-icons/io5";
+
 
 export default function LoginForm() {
 
-  const { user, login, loading, error } = useAuth();
-
-  let username = "test1";
-  let pin = "1234";
+  const { login, loading } = useAuth();
+  const [username, setUsername] = useState("test1");
+  const [pin, setPin] = useState("1234");
 
   const loginBtnClick = () => {
     login(username, pin);
@@ -43,10 +38,10 @@ export default function LoginForm() {
                 id="email"
                 type="username"
                 name="username"
-                value="test1"
+                value={username}
                 placeholder="Enter your username"
                 required
-                onChange={(e) => { username = e.target.value }}
+                onChange={(e) => { setUsername(e.target.value) }}
               />
               <CiUser className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900"></CiUser>
             </div>
@@ -65,16 +60,16 @@ export default function LoginForm() {
                 type="password"
                 name="pin"
                 placeholder="Enter pin"
-                value="1234"
+                value={pin}
                 required
                 minLength={4}
-                onChange={(e) => { pin = e.target.value }}
+                onChange={(e) => { setPin( e.target.value ) }}
               />
-              <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+              <IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
           </div>
         </div>
-        <LoginButton loginBtnClick={loginBtnClick} />
+        <LoginButton loginBtnClick={loginBtnClick} loading={loading} />
         <div className="flex h-8 items-end space-x-1">
           {/* Add form errors here */}
         </div>
@@ -83,11 +78,13 @@ export default function LoginForm() {
   );
 }
 
-function LoginButton( {loginBtnClick}: {loginBtnClick: () => void } ) {
+function LoginButton({loginBtnClick, loading = false}: {loading: boolean, loginBtnClick: () => void }) {
 
   return (
     <Button className="mt-4 w-full" onClick={ (e) => { loginBtnClick(); } }>
-      Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+      Log in 
+        {!loading ? <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+          : <FaSpinner  className="ml-auto h-5 w-5 text-gray-50" />}
     </Button>
   );
 }

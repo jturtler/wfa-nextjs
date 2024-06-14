@@ -8,28 +8,6 @@ import { JSONObject } from "../lib/definitions";
 
 export default function Listing() {
 
-	const [ clientList, setClientList ] = useState<Array<any>>([]);
-	//const clientList = [];
-
-	// const getClientsList = () => {
-	// 	fetch( 'clients.json', {
-	// 		headers : { 
-	// 			'Content-Type': 'application/json',
-	// 			'Accept': 'application/json'
-	// 		  }
-	// 	}).then( function( resp ) {
-	// 		console.log( resp );
-	// 		return resp.json();
-	// 	}).then( function( returnJson ) {
-	// 		console.log( returnJson );
-	// 		setClientList( returnJson );
-	// 	});
-	// };
-
-	// useEffect( () => {
-	// 	getClientsList();
-	// }, []);
-
 	const {list, fetchClientList} = useClients();
 	// useEffect(() => {
 		if( list == null ) {
@@ -38,10 +16,6 @@ export default function Listing() {
 	// },[]);
 
 	
-
-	// const [ clientList, setClientList ] = useState(null);
-
-console.log(list);
 	return (
 	<div className="h-[100vh] overflow-hidden">
 		<SectionTop></SectionTop>

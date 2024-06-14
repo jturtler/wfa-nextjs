@@ -26,7 +26,7 @@ export default function ClientCard( {client}: {client: any}) {
 				<div className="min-h-[20px]"></div>
 			</div>
 			<div className="flex items-center p-1 align-middle">
-				<img className="animate-spin" src="https://cdn-icons-png.flaticon.com/512/3306/3306599.png" />
+				<img className="animate-spin" alt="" src="https://cdn-icons-png.flaticon.com/512/3306/3306599.png" />
 			</div>
 		</div>
 		<Modal isVisible={isVisible} onClose={clientDetailModalClose} >

@@ -10,16 +10,22 @@ export default function SectionTop() {
 
 	// const { username } = useLoginUserContext();
 	
-	const { user } = useAuth();
+	const { user, logout } = useAuth();
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 
+	const handleOnLogout = () => {
+		const ok = confirm("Are you sure you want to log-out ?");
+		if( ok ) {
+			logout();
+		}
+	}
 	const onClose = () => {
 		setIsVisible(false);
 	};
 
 	return (
 		<>
-			<div className="divTopNav h-[30px] bg-blue-700 p-1 grid grid-cols-2">
+			<div className="divTopNav h-[50px] bg-blue-700 p-1 grid grid-cols-2">
 				<div className="flex justify-start items-center">
 					<IoMenuOutline className="text-2xl font-bold cursor-pointer hover:bg-blue-500" onClick={(e) => setIsVisible(true)} />
 					<div className="text-white ml-2 font-light"><span>[ {user?.username} ]</span></div>
@@ -33,8 +39,8 @@ export default function SectionTop() {
 						<div className="inline-block ml-2 hover:bg-blue-200 p-1 cursor-pointer font-bold " onClick={(e) => onClose()}>X</div>
 					</div>
 					<div className="grid gap-2 p-1">
-						<div className="cursor-pointer rounded-md bg-blue-100 p-2 text-sm font-semibold text-gray-600 shadow-md hover:bg-blue-200">Menu 1</div>
-						<div className="cursor-pointer rounded-md bg-blue-100 p-2 text-sm font-semibold text-gray-600 shadow-md hover:bg-blue-200">Menu 2</div>
+						<div className="cursor-pointer rounded-md bg-blue-100 p-2 text-sm font-semibold text-gray-600 shadow-md hover:bg-blue-200">Client list</div>
+						<div className="cursor-pointer rounded-md bg-blue-100 p-2 text-sm font-semibold text-gray-600 shadow-md hover:bg-blue-200" onClick={() => handleOnLogout()}>Logout</div>
 					</div>
 				</div>
 			</Modal>

@@ -9,13 +9,15 @@ export const getClientList = async(): Promise<ResponseData> => {
     return await findDocument("clients", {});
 }
 
-export const saveClient = async(clientData: JSONObject): Promise<ResponseData> => {
-  
+export const saveClientData = async(clientData: JSONObject): Promise<ResponseData> => {
+  console.log("====================== API saveClientDataa");
     if( clientData._id ) { // for update case
-        return await addDocument("clients", clientData);
+        console.log("----------- Update");
+        return await updateDocument("clients", clientData);
     }
     
     // new case
-    return await updateDocument("clients", clientData);
+        console.log("----------- Add new");
+    return await addDocument("clients", clientData);
 }
 

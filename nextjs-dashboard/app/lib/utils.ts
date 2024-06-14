@@ -64,6 +64,7 @@ export const findAndReplaceItemFromList = function( list: JSONObject[], searchVa
 		{
 			list[i] = cloneJSONObject( replacedData );
 			found = true;
+            break;
 		}
 	}
 

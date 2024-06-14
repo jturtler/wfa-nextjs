@@ -3,6 +3,7 @@
 import LoginForm from "./login-form";
 import Listing from "./listing";
 import { useAuth } from '../contexts/AuthContext';
+import SectionTop from "./sectionTop";
 
 export default function AppMain() {
 
@@ -15,7 +16,10 @@ export default function AppMain() {
 		<div className="divMain">
 			{
 				(user != null) ? (
-					<Listing></Listing>
+					<>
+						<SectionTop></SectionTop>
+						<Listing></Listing>
+					</>
 				) : (
 					<>
 						<div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">

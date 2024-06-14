@@ -3,6 +3,7 @@ import Modal from "./modal";
 import { FaHospitalUser } from "react-icons/fa";
 import { JSONObject } from "../lib/definitions";
 import * as Utils from "@/app/lib/utils";
+import ClientDetailsForm from "./ClientDetails";
 
 export default function ClientCard( {client}: {client: JSONObject}) {
 
@@ -33,10 +34,13 @@ export default function ClientCard( {client}: {client: JSONObject}) {
 				<img className="animate-spin" alt="" src="https://cdn-icons-png.flaticon.com/512/3306/3306599.png" />
 			</div>
 		</div>
+
 		<Modal isVisible={isVisible} onClose={clientDetailModalClose} >
 			<div className="bg-white w-screen h-screen p-2">
 				<div className="font-semibold cursor-pointer" onClick={(e) => { clientDetailModalClose() } }>X</div>
-				<div>{JSON.stringify(client)}</div>
+				{/* <div>{JSON.stringify(client)}</div> */}
+
+				<ClientDetailsForm clientData={client}/>
 			</div>
 		</Modal>
 		</>

@@ -1,7 +1,7 @@
 "use server";
 
 import { mongoose } from "@/app/lib/db"; // Have to have this import so that we can connect database
-import { JSONObject } from "../schemas/types";
+import { JSONObject } from "@/app/lib/definitions";
 import User  from '@/app/lib/schemas/User.schema';
 import * as Utils from "../utils";
 

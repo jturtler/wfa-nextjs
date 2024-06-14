@@ -27,7 +27,7 @@ export type CustomerField = {
   name: string;
 };
 
-export default interface ResponseData {
+export interface ResponseData {
   success: boolean;
   message?: string;
   data?: any;

@@ -2,8 +2,7 @@
 
 import { mongoose } from "@/app/lib/db"; // Have to have this import so that we can connect database
 import Client from "../schemas/Client.schema";
-import ResponseData from "../definitions";
-import { JSONObject } from "../schemas/types";
+import { JSONObject, ResponseData } from "@/app/lib/definitions";
 import * as Utils from '../utils';
 import { v4 as uuidv4 } from 'uuid';
 

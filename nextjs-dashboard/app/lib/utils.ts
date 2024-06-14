@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { JSONObject, Message } from "./schemas/types";
+import { JSONObject, Message } from "@/app/lib/definitions";
 
 export const converDbObjectToJson = ( obj: Document | Document[]) => {
     return JSON.parse(JSON.stringify(obj));

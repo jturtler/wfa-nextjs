@@ -21,7 +21,7 @@ const ClientContext = createContext<ClientContextProps>({
 
 export const useClients = () => useContext(ClientContext);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const ClientProvider = ({ children }: { children: ReactNode }) => {
 	const [list, setList] = useState<any>(null);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);

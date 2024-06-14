@@ -7,27 +7,24 @@ import {
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
 import { CiUser } from "react-icons/ci";
-import { useLoggedInContext } from '../contexts/loggedInContext';
-import { useLoginUserContext } from '../contexts/loginUserContext';
+// import { useLoggedInContext } from '../contexts/loggedInContext';
+// import { useLoginUserContext } from '../contexts/loginUserContext';
+import { useAuth } from '../contexts/AuthContext';
+// import { useState } from 'react';
 
 export default function LoginForm() {
 
-  const { loggedIn, setLoggedIn } = useLoggedInContext();
-  const { username, setUsername, pin, setPin } = useLoginUserContext();
+  const { user, login, loading, error } = useAuth();
 
-  let usernameTemp = username;
-  let pinTemp = pin;
+  let username = "test1";
+  let pin = "1234";
 
   const loginBtnClick = () => {
-    setUsername( usernameTemp );
-    setPin( pinTemp );
-    
-    setLoggedIn( true );
-    console.log( 'logged In state set to true ');
+    login(username, pin);
   };
 
   return (
-    <form className="space-y-3">
+    <div className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please log in to continue.
@@ -46,9 +43,10 @@ export default function LoginForm() {
                 id="email"
                 type="username"
                 name="username"
+                value="test1"
                 placeholder="Enter your username"
                 required
-                onChange={(e) => { usernameTemp = e.target.value }}
+                onChange={(e) => { username = e.target.value }}
               />
               <CiUser className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900"></CiUser>
             </div>
@@ -67,9 +65,10 @@ export default function LoginForm() {
                 type="password"
                 name="pin"
                 placeholder="Enter pin"
+                value="1234"
                 required
                 minLength={4}
-                onChange={(e) => { pinTemp = e.target.value }}
+                onChange={(e) => { pin = e.target.value }}
               />
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
@@ -80,7 +79,7 @@ export default function LoginForm() {
           {/* Add form errors here */}
         </div>
       </div>
-    </form>
+    </div>
   );
 }
 

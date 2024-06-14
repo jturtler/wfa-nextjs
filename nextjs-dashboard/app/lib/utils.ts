@@ -75,6 +75,13 @@ export const findAndReplaceItemFromList = function( list: JSONObject[], searchVa
 
 }
 
+export const getErrMessage = (ex: any) => {
+  if (ex instanceof Error) {
+      return `An error occurred: ${ex.message}`;
+  } 
+  
+  return `An unexpected error occurred: ${ex}`;
+}
 
 export const createMessage = (type: string = "", msg: string = ""): Message => {
     return { type, msg };

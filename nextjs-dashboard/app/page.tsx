@@ -7,15 +7,16 @@ import LoginForm from './ui/login-form';
 import AppMain from './ui/appMain';
 import { LoggedInContextWrapper } from './contexts/loggedInContext';
 import { LoginUserContextWrapper } from './contexts/loginUserContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 export default function Page() {
   return (
     <main className="mainPage">
-      <LoggedInContextWrapper>
-        <LoginUserContextWrapper>
+      {/* <LoggedInContextWrapper> */}
+        <AuthProvider>
           <AppMain></AppMain>
-        </LoginUserContextWrapper>
-      </LoggedInContextWrapper>    
+        </AuthProvider>
+      {/* </LoggedInContextWrapper>     */}
     </main>
   );
 }

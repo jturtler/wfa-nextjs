@@ -2,7 +2,7 @@
 
 import { mongoose } from "@/app/lib/db"; // Have to have this import so that we can connect database
 import Client from "../schemas/Client.schema";
-import ResponseData, {getErrMessage} from "./response";
+import ResponseData from "../definitions";
 import { JSONObject } from "../schemas/types";
 import * as Utils from '../utils';
 import { v4 as uuidv4 } from 'uuid';
@@ -32,7 +32,7 @@ export const saveActivityData = async(clientData: JSONObject, activityData: JSON
     catch(ex) {
        return {
             success: false,
-            message: getErrMessage(ex)
+            message: Utils.getErrMessage(ex)
         }
     }
 }

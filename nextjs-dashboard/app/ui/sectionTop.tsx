@@ -1,13 +1,16 @@
 'use client';
 
-import { useLoginUserContext } from "../contexts/loginUserContext";
+// import { useLoginUserContext } from "../contexts/loginUserContext";
 import { IoMenuOutline } from "react-icons/io5";
 import Modal from "./modal";
 import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function SectionTop() {
 
-	const { username } = useLoginUserContext();
+	// const { username } = useLoginUserContext();
+	
+	const { user } = useAuth();
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 
 	const onClose = () => {
@@ -19,7 +22,7 @@ export default function SectionTop() {
 			<div className="divTopNav h-[30px] bg-blue-700 p-1 grid grid-cols-2">
 				<div className="flex justify-start items-center">
 					<IoMenuOutline className="text-2xl font-bold cursor-pointer hover:bg-blue-500" onClick={(e) => setIsVisible(true)} />
-					<div className="text-white ml-2 font-light"><span>[ {username} ]</span></div>
+					<div className="text-white ml-2 font-light"><span>[ {user.username} ]</span></div>
 				</div>
 				<div>
 				</div>

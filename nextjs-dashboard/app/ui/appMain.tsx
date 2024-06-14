@@ -3,12 +3,13 @@
 import LoginForm from "./login-form";
 import Listing from "./listing";
 import { useState } from "react";
-import { useLoggedInContext } from "../contexts/loggedInContext";
+// import { useLoggedInContext } from "../contexts/loggedInContext";
+import { useAuth } from '../contexts/AuthContext';
 
 export default function AppMain() {
 
-	const { loggedIn, setLoggedIn } = useLoggedInContext();
-
+	// const { loggedIn, setLoggedIn } = useLoggedInContext();
+	const { isAuthenticated } = useAuth();
 	//const { loggedIn, setLoggedIn } = useState< { boolean} >( false );
 	//let loggedIn = false;
 
@@ -17,7 +18,7 @@ export default function AppMain() {
 	return (
 		<div className="divMain">
 			{
-				(loggedIn) ? (
+				(isAuthenticated) ? (
 					<Listing></Listing>
 				) : (
 					<>

@@ -6,7 +6,7 @@ import User  from '@/app/lib/schemas/User.schema';
 import * as Utils from "../utils";
 
 export const checkLogin = async(username: string, pin: string): Promise<JSONObject | null> => {
-      
+    
     const found = await User.find({
         username,
         pin

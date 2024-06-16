@@ -2,25 +2,18 @@ import { useEffect, useState } from "react";
 import * as Utils from "@/app/lib/utils";
 import { JSONObject } from "../lib/definitions";
 import ClientForm from "./ClientForm";
+import ActivityList from "./ActiviyList";
+import ActivityForm from "./ActivityForm";
+import useAppContext from "../contexts";
+import * as Constant from "@/app/lib/constants";
 
 
-export default function ClientDetailsForm ({ clientData }: {clientData: JSONObject}) {
+export default function ClientDetailsForm ({ client }: {client: JSONObject}) {
 
+    const [clientData, setClientData] = useState(client);
     const [activeTab, setActiveTab] = useState('clientDetailsTab');
     const [showActivityForm, setShowActivityForm] = useState(false);
 
-    const [data, setData] = useState(clientData);
-
-    // useEffect(() => {
-	// 	if (statusData.status == Constant.SAVE_ACTIVITY_SUCCESS) {
-    //         const data = Utils.findItemFromList(clientList, clientData._id, "_id");
-    //         console.log(data);
-    //         setData(data);
-    //         setShowActivityForm(false);
-	// 	}
-
-	// }, [statusData])
-      
 
     const handleTabClick = (tab: string) => {
         setActiveTab(tab);
@@ -56,9 +49,11 @@ export default function ClientDetailsForm ({ clientData }: {clientData: JSONObje
 
             {/* // Content div */}
             <div className="p-4">
-                {!showActivityForm && activeTab === 'clientDetailsTab' && <ClientForm clientData={data} handleCloseForm={() => {}} />}
-                {/* {!showActivityForm && activeTab === 'activitiesTab' && <ActivityList clientData={data} />} */}
-                {/* {showActivityForm && <ActivityForm clientData={data} handleOnClose={(e) => setShowActivityForm(false)}/> } */}
+                {!showActivityForm && activeTab === 'clientDetailsTab' && <ClientForm client={client} handleCloseForm={() => {}} />}
+                {!showActivityForm && activeTab === 'activitiesTab' && <ActivityList client={client} />}
+                {showActivityForm && <ActivityForm client={client} 
+                    handleOnClose={() => setShowActivityForm(false)}
+                    /> }
             </div>
 
             {/* <!-- Floating Button --> */}

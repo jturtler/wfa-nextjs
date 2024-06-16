@@ -5,18 +5,21 @@ import { IoMenuOutline } from "react-icons/io5";
 import Modal from "./modal";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import useAppContext from "../contexts";
+import * as Constant from "@/app/lib/constants";
 
 export default function SectionTop() {
 
 	// const { username } = useLoginUserContext();
 	
-	const { user, logout } = useAuth();
+	const { user, logout, setMainUi } = useAppContext();
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 
 	const handleOnLogout = () => {
 		const ok = confirm("Are you sure you want to log-out ?");
 		if( ok ) {
 			logout();
+			setMainUi(Constant.UI_LOGIN_PAGE);
 		}
 	}
 	const onClose = () => {

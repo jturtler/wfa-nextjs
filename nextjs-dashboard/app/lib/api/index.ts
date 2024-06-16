@@ -2,7 +2,6 @@
 
 export * from "./authenticate.api";
 export * from "./client.api";
-export * from "./activity.api";
 
 // global.myGlobalVar = "Hello, world!"; // Assign a value to the global variable
 

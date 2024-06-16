@@ -121,7 +121,7 @@ export const updateDocument = async(colectionName: string, payloadJson: JSONObje
 		 
 		return {
 			success: true,
-			data: doc
+			data: payloadJson
 		}
 	}
 	catch(ex) {

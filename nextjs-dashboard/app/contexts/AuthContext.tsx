@@ -11,7 +11,7 @@ interface AuthContextProps {
 	login: (username: string, pin: string) => Promise<void>;
 	logout: () => void;
 	loading: boolean;
-	error: string | null;
+	authError: string | null;
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -19,7 +19,7 @@ const AuthContext = createContext<AuthContextProps>({
 	login: async () => { },
 	logout: () => { },
 	loading: false,
-	error: null,
+	authError: null,
 });
 
 export const useAuth = (): AuthContextProps => {
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	}
 
 	return (
-		<AuthContext.Provider value={{ user, loading, error, login, logout }}>
+		<AuthContext.Provider value={{ user, loading, authError: error, login, logout }}>
 			{children}
 		</AuthContext.Provider>
 	);

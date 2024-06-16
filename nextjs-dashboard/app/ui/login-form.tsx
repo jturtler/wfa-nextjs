@@ -3,16 +3,27 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
 import { CiUser } from "react-icons/ci";
 import { useAuth } from '../contexts/AuthContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { IoKeyOutline } from "react-icons/io5";
+import useAppContext from '../contexts';
+import * as Constant from '@/app/lib/constants';
 
 
 export default function LoginForm() {
 
-  const { login, loading } = useAuth();
+  // const { login, loading } = useAuth();
+
+  const { user, login, loading, setMainUi } = useAppContext();
+
   const [username, setUsername] = useState("test1");
   const [pin, setPin] = useState("1234");
+
+  useEffect(() => {
+    if( user != null ) {
+      setMainUi(Constant.UI_CLIENT_LIST);
+    }
+  },[user])
 
   const loginBtnClick = () => {
     login(username, pin);

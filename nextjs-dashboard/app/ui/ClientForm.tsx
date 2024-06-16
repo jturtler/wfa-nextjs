@@ -11,27 +11,12 @@ import { useClients } from "../contexts/ClientContext";
 import { FaSpinner } from "react-icons/fa6";
 
 
-export default function ClientForm({ clientData = {} as JSONObject, handleCloseForm = () => { }}) {
+export default function ClientForm({ client = {} as JSONObject, handleCloseForm = () => { }}) {
 
-    const {processing, error, saveClient} = useClients();
+    const {processing, clientError, saveClient} = useClients();
 
-   
-	// useEffect(() => {
-	// 	if (statusData.status == Constant.SAVE_CLIENT_SUCCESS) {
-    //         if( clientData._id != undefined ) // For update an client, used in Details Client form
-	// 		{ 
-    //             setAllowToEdit(false);
-    //         }
-    //         else if( handleCloseForm ){
-    //             handleCloseForm();
-    //         }
-	// 	}
-	// }, [statusData])
-
-
-
-    const [data, setData] = useState(clientData);
-    const [allowToEdit, setAllowToEdit] = useState(!clientData._id);
+    const [data, setData] = useState(client);
+    const [allowToEdit, setAllowToEdit] = useState(!client._id);
 
     
     const setValue = (propName: string, value: string | Date | null) => {
@@ -58,9 +43,9 @@ export default function ClientForm({ clientData = {} as JSONObject, handleCloseF
     const handleOnCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         
-        if( clientData._id != undefined ) // For update an client, used in Details Client form
+        if( client._id != undefined ) // For update an client, used in Details Client form
         { 
-            setData(clientData);
+            setData(client);
             setAllowToEdit(false);
         }
         else if( handleCloseForm ){
@@ -70,7 +55,7 @@ export default function ClientForm({ clientData = {} as JSONObject, handleCloseF
     }
       
     const getTitle = (): string => {
-        if ( clientData._id ) {
+        if ( client._id ) {
             return ( allowToEdit ) ? "Edit Client" : "Client Details";
         }
 
@@ -84,10 +69,10 @@ export default function ClientForm({ clientData = {} as JSONObject, handleCloseF
     return (
         <div className="w-full mx-auto mt-5 p-4 border border-gray-300 rounded-md shadow-md bg-white">
 
-            { processing == Constant.PROCESSING_CLIENT_DATA_SAVED && error == null 
+            { processing == Constant.PROCESSING_CLIENT_DATA_SAVED && clientError == null 
                 && <Alert type={Constant.ALERT_TYPE_INFO} message="Client data is saved." />}
 
-            {error != null &&  <Alert type={Constant.ALERT_TYPE_ERROR} message={error} />}
+            {clientError != null &&  <Alert type={Constant.ALERT_TYPE_ERROR} message={clientError} />}
 
             <div className="relative flex items-center p-5">
                 <h1 className="absolute left-1/2 transform -translate-x-1/2 text-2xl font-bold">{getTitle()}</h1>
@@ -97,33 +82,34 @@ export default function ClientForm({ clientData = {} as JSONObject, handleCloseF
             </div>
         
           <div className="mb-8">
-            <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">Full name <span className="text-red-600">*</span></label>
+            <label htmlFor="fullName" className="mb-3 mt-5 block text-xs font-medium text-gray-900">Full name <span className="text-red-600">*</span></label>
              <input 
                 onChange={(e) => setValue("fullName", e.target.value)}
                 value={data.fullName}
                 id="fullName"
                 type="text"
-                // className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 "
+                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-3 text-sm outline-2 placeholder:text-gray-500"
                 placeholder="Name" 
                 disabled={!allowToEdit}
             />
           </div>
           <div className="mb-8">
-            <label htmlFor="birthdate" className="block text-sm font-medium text-gray-700" >Birthdate <span className="text-red-600">*</span></label>
+            <label htmlFor="birthdate" className="mb-3 mt-5 block text-xs font-medium text-gray-900" >Birthdate <span className="text-red-600">*</span></label>
             <DateField 
                 id="birthdate"
                 handleOnChange={(date: Date | null) => setValue("birthdate", date)}
                 value={birthDate}
-                // className="border border-slate-500 px-2 py-2"
+                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-3 text-sm outline-2 placeholder:text-gray-500"
+                placeholder="Name"
                 disabled={!allowToEdit}
             />
           </div>
           <div className="mb-8">
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone number</label>
+            <label htmlFor="phone" className="mb-3 mt-5 block text-xs font-medium text-gray-900">Phone number</label>
             <input 
                 onChange={(e) => setValue("phone", e.target.value)}
                 value={data.phone}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 "
+                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-3 text-sm outline-2 placeholder:text-gray-500"
                 type="phone" 
                 placeholder="Phone number" 
                 disabled={!allowToEdit}
@@ -139,7 +125,7 @@ export default function ClientForm({ clientData = {} as JSONObject, handleCloseF
                         <FaSpinner className="ml-auto h-4 w-5 text-gray-50" /> }
                 </Button>
 
-                <Button className="mt-4 w-2/5 bg-yellow-500 text-center" style={{display: "inline"}} onClick={ (e) => handleOnCancelClick(e) }>
+                <Button className="mt-4 w-2/5 bg-yellow-400 text-center" style={{display: "inline"}} onClick={ (e) => handleOnCancelClick(e) }>
                     Cancel
                 </Button>
             </div>}

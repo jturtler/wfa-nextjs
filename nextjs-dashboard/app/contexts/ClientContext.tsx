@@ -10,14 +10,20 @@ interface ClientContextProps {
 	clientList: JSONObject[] | null;
     processing: string;
     saveClient: (client: JSONObject) => Promise<void>;
-	error: string | null;
+	setSelectedClient: (clientId: string) => void;
+    saveActivity: (client: JSONObject, activity: JSONObject) => Promise<void>;
+	clientError: string | null;
+	selectedClient: JSONObject | null;
 }
 
 const ClientContext = createContext<ClientContextProps>({
 	clientList: null,
     saveClient: async () => { },
+    setSelectedClient: () => { },
+    saveActivity: async () => { },
     processing: "",
-	error: null,
+	clientError: null,
+	selectedClient: null
 });
 
 export const useClients = (): ClientContextProps => {
@@ -30,12 +36,15 @@ export const useClients = (): ClientContextProps => {
 
 export const ClientProvider = ({ children }: { children: ReactNode }) => {
 	const [clientList, setClientList] = useState<JSONObject[] | null>(null);
+	const [selectedClientData, setSelectedClientData] = useState<JSONObject | null>(null);
 	const [processing, setProcessing] = useState<string>("");
 	const [error, setError] = useState<string | null>(null);
 
+	console.log("--------------ClientProvider ");
+	console.log (clientList);
 	useEffect(() => {
 		fetchClientList()
-	  }, []);
+	}, []);
 
 	const fetchClientList = async () => {
 		setProcessing(Constant.PROCESSING_CLIENT_LIST_LOADING);
@@ -86,9 +95,45 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
 			setProcessing(Constant.PROCESSING_CLIENT_DATA_SAVED);
 		}
 	}
+	
+	const setSelectedClient = (clientId: string) => {
+		const found = Utils.findItemFromList(clientList!, clientId, "_id");
+		setSelectedClientData(found);
+	}
+
+	const saveActivity = async(clientData: JSONObject, activityData: JSONObject) => {
+		console.log(" =========== saveActivity ");
+		setProcessing(Constant.PROCESSING_ACTIVITY_SAVING);
+		
+		console.log(" ----------- processing 1 : " + processing);
+
+		try {
+			const responseData: ResponseData = await api.saveActivityData(clientData, activityData);
+			
+			console.log(" ----------- processing 2 : " + processing);
+			const tempList = Utils.cloneJSONObject(clientList!);
+
+			if (responseData.success) {
+				Utils.findAndReplaceItemFromList( tempList, clientData._id, "_id", responseData.data );
+                setClientList(tempList);
+				console.log(tempList);
+				setError(null);
+            }
+            else {
+				setError(responseData.message!);
+            }
+
+		} catch (err) {
+			setError(Utils.getErrMessage(err));
+		} finally {
+			console.log(" ----------- processing 3 : " + processing);
+			setProcessing(Constant.PROCESSING_ACTIVITY_SAVED);
+			console.log(" ----------- processing 4 : " + processing);
+		}
+	}
 
 	return (
-		<ClientContext.Provider value={{ clientList, saveClient, processing, error }}>
+		<ClientContext.Provider value={{ clientList, selectedClient: selectedClientData, setSelectedClient, saveClient, saveActivity, processing, clientError: error }}>
 			{children}
 		</ClientContext.Provider>
 	);

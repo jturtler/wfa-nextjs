@@ -79,20 +79,16 @@ export const findDocument = async(colectionName: string, payloadJson: JSONObject
 export const addDocument = async(colectionName: string, payloadJson: JSONObject) : Promise<ResponseData> => {
 	try {
 		const { db } = await connectToDatabase();
-		// payloadJson._id = new ObjectId(uuidv4());
-		console.log("========= addDocument 1");
-		// payloadJson.createdAt = new Date();
-		console.log(payloadJson);
+
 		var doc = await db.collection(colectionName).insertOne(payloadJson);
 		payloadJson._id = doc.insertedId;
+
 		return {
 			success: true,
 			data: payloadJson
 		}
 	}
 	catch(ex) {
-		console.log("========= addDocument ERROR");
-		console.log(ex);
 		return {
 			success: false,
 			message: Utils.getErrMessage(ex)

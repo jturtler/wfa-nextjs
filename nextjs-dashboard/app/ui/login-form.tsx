@@ -2,31 +2,42 @@ import { lusitana } from '@/app/ui/fonts';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
 import { CiUser } from "react-icons/ci";
-import { useAuth } from '../contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { IoKeyOutline } from "react-icons/io5";
 import useAppContext from '../contexts';
 import * as Constant from '@/app/lib/constants';
-
+import * as AppStore from '@/app/lib/appStorage';
+import * as api from '@/app/lib/api';
 
 export default function LoginForm() {
 
   // const { login, loading } = useAuth();
 
-  const { user, login, loading, setMainUi } = useAppContext();
+  const { setMainUi } = useAppContext();
+
+  const [user, setUser] = useState(AppStore.getUser());
+  const [loading, setLoading] = useState(false);
 
   const [username, setUsername] = useState("test1");
   const [pin, setPin] = useState("1234");
 
   useEffect(() => {
-    if( user != null ) {
+    if( AppStore.getUser() != null ) {
       setMainUi(Constant.UI_CLIENT_LIST);
     }
   },[user])
 
-  const loginBtnClick = () => {
-    login(username, pin);
+  const loginBtnClick = async() => {
+    setLoading(true);
+
+    const userData = await api.checkLogin(username, pin);
+    if( userData != null ) {
+      AppStore.setUser(userData);
+      setUser(userData);
+    }
+
+    setLoading(false);
   };
 
   return (

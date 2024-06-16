@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as Utils from "@/app/lib/utils";
 import { JSONObject } from "../lib/definitions";
 import ClientForm from "./ClientForm";
@@ -8,13 +8,11 @@ import useAppContext from "../contexts";
 import * as Constant from "@/app/lib/constants";
 
 
-export default function ClientDetailsForm ({ client }: {client: JSONObject}) {
+export default function ClientDetailsForm ({ client, onUpdated }: {client: JSONObject, onUpdated: () => void}) {
 
-    const [clientData, setClientData] = useState(client);
     const [activeTab, setActiveTab] = useState('clientDetailsTab');
-    const [showActivityForm, setShowActivityForm] = useState(false);
-
-
+    const [showActivityForm, setShowActivityForm] = useState(false); 
+    
     const handleTabClick = (tab: string) => {
         setActiveTab(tab);
     };
@@ -49,9 +47,9 @@ export default function ClientDetailsForm ({ client }: {client: JSONObject}) {
 
             {/* // Content div */}
             <div className="p-4">
-                {!showActivityForm && activeTab === 'clientDetailsTab' && <ClientForm client={client} handleCloseForm={() => {}} />}
-                {!showActivityForm && activeTab === 'activitiesTab' && <ActivityList client={client} />}
-                {showActivityForm && <ActivityForm client={client} 
+                {!showActivityForm && activeTab === 'clientDetailsTab' && <ClientForm client={client} handleOnUpdated={() => onUpdated()} handleCloseForm={() => {}} />}
+                {!showActivityForm && activeTab === 'activitiesTab' && <ActivityList client={client}  handleOnUpdated={() => onUpdated()} />}
+                {showActivityForm && <ActivityForm client={client}  handleOnUpdated={() => onUpdated()} 
                     handleOnClose={() => setShowActivityForm(false)}
                     /> }
             </div>

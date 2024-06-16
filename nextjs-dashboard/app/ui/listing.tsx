@@ -1,33 +1,68 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ClientCard from "./clientCard";
 import SectionTop from "./sectionTop";
-import { useClients } from "../contexts/ClientContext";
 import { JSONObject } from "../lib/definitions";
 import * as Constant from '../lib/constants';
 import { FaSpinner } from 'react-icons/fa';
+import * as AppStore from '@/app/lib/appStorage';
+import * as api from '@/app/lib/api';
+import * as Utils from '@/app/lib/utils';
+import useAppContext from "../contexts";
+import ClientForm from "./ClientForm";
 
 export default function Listing() {
 
-	const {processing, clientList} = useClients();
-	console.log("--------------- Listing ");
-	console.log(clientList);
-	return (
-	<div className="h-[100vh] overflow-hidden">
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+	const [clientList, setClientList] = useState(AppStore.getClientList());
 
-		{ processing == Constant.PROCESSING_CLIENT_LIST_LOADING 
-			? <FaSpinner className="text-9xl" /> 
-			:
-			<div className="divMiddleContent flex">
-				<div className="divSiceNav w-10 hidden bg-gray-700 text-gray-300 p-1">m1</div>
-				<div className="divMainList m-1 grid h-[calc(100vh-68px)] flex-1 content-start gap-1 overflow-x-auto border-0 border-gray-400 md:grid-cols-2">
+	const { mainUi, setMainUi } = useAppContext();
+
+	const fetchClientList = async() => {
+		try {
+			setLoading(true);
+			const response = await  api.getClientList()
+			if (!response.success) {
+				setError('Network response was not ok');
+			}
+
+			AppStore.setClientList(response.data);
+			setClientList(response.data);
+			
+		} catch (ex) {
+			setError( Utils.getErrMessage(ex) );
+		} finally {
+			setLoading(false);
+		}
+	}
+	
+	useEffect(() => {
+		if( AppStore.getClientList() == null ) {
+			fetchClientList();
+		}
+	}, [])
+
+
+	return (
+	<div className="overflow-hidden">
+
+		{ loading && <FaSpinner className="text-9xl" /> }
+			
+		{(!loading && mainUi == Constant.UI_CLIENT_LIST ) && <div className="divMiddleContent flex">
+			<div className="divSiceNav w-10 hidden bg-gray-700 text-gray-300 p-1">m1</div>
+				<div className="divMainList m-1 grid h-[calc(100vh-90px)] flex-1 content-start gap-1 overflow-x-auto border-0 border-gray-400 md:grid-cols-2">
 					{ clientList != null && clientList?.map( (client: JSONObject, index: number) => (
-						<ClientCard key={client._id} client={client}></ClientCard>
+						<ClientCard key={client._id} client={client} />
 					))
 					}
 				</div>
-			</div>}
+
+				 {/* <!-- Floating Button --> */}
+				 { AppStore.getSelectedClient() == null && <button className="fixed bottom-16 right-5 w-14 h-14 bg-sal bg-yellow-500 hover:bg-yellow-600 text-black rounded-full shadow-lg flex items-center justify-center text-2xl"
+                	onClick={()=> setMainUi(Constant.UI_ADD_CLIENT_FORM)}> + </button>}
+			</div> }
 			
 		<div className="divBottomTop h-[30px] bg-gray-900 p-1 text-xs text-white">Version 1.2.0</div>
 	</div>

@@ -7,25 +7,28 @@ import * as Constant from "@/app/lib/constants";
 import { CiEdit } from "react-icons/ci";
 import DateField from "./basics/DateField";
 import { Button } from "./button";
-import { useClients } from "../contexts/ClientContext";
+import * as AppStore from '@/app/lib/appStorage';
+import * as api from '@/app/lib/api';
 import { FaSpinner } from "react-icons/fa6";
+import * as Utils from "@/app/lib/utils";
 
+export default function ClientForm({ client = {} as JSONObject, handleOnUpdated = () => { }, handleCloseForm = () => { }}) {
 
-export default function ClientForm({ client = {} as JSONObject, handleCloseForm = () => { }}) {
+    const [data, setData] = useState<JSONObject>(client);
+    const [processing, setProcessing] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
-    const {processing, clientError, saveClient} = useClients();
-
-    const [data, setData] = useState(client);
-    const [allowToEdit, setAllowToEdit] = useState(!client._id);
+    const [allowToEdit, setAllowToEdit] = useState(client._id == undefined);
 
     
     const setValue = (propName: string, value: string | Date | null) => {
+        console.log(data);
         var tempData = JSON.parse( JSON.stringify(data));
-        if( value instanceof Date ) {
-            tempData[propName] = value.toDateString();
-        }
         if( value == null ) {
             tempData[propName] = "";
+        }
+        else if( value instanceof Date ) {
+            tempData[propName] = value.toISOString();
         }
         else {
             tempData[propName] = value;
@@ -34,10 +37,26 @@ export default function ClientForm({ client = {} as JSONObject, handleCloseForm 
         setData( tempData );
     }
 
-    const handleOnSaveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleOnSaveClick = async(e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-
-        saveClient(data);
+        setError(null);
+        setProcessing(Constant.PROCESSING_CLIENT_DATA_SAVED);
+        
+        const response = await api.saveClientData(data);
+        if( response.success ) {
+            setProcessing(Constant.PROCESSING_CLIENT_DATA_SAVED);
+            if( client._id != undefined ) { // Update case
+                Utils.findAndReplaceItemFromList(AppStore.getClientList()!, client._id, "_id", response.data!);
+                setAllowToEdit(false);
+            }
+            else { // Add case
+                AppStore.addClientInList(response.data);
+                handleOnUpdated();
+            }
+        }
+        else {
+            setError(response.message!);
+        }
     }
 
     const handleOnCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -69,10 +88,10 @@ export default function ClientForm({ client = {} as JSONObject, handleCloseForm 
     return (
         <div className="w-full mx-auto mt-5 p-4 border border-gray-300 rounded-md shadow-md bg-white">
 
-            { processing == Constant.PROCESSING_CLIENT_DATA_SAVED && clientError == null 
+            { processing == Constant.PROCESSING_CLIENT_DATA_SAVED && error == null 
                 && <Alert type={Constant.ALERT_TYPE_INFO} message="Client data is saved." />}
 
-            {clientError != null &&  <Alert type={Constant.ALERT_TYPE_ERROR} message={clientError} />}
+            {error != null &&  <Alert type={Constant.ALERT_TYPE_ERROR} message={error} />}
 
             <div className="relative flex items-center p-5">
                 <h1 className="absolute left-1/2 transform -translate-x-1/2 text-2xl font-bold">{getTitle()}</h1>

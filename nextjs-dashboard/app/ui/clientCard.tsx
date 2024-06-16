@@ -1,31 +1,38 @@
 import { useState } from "react";
 import Modal from "./modal";
-import { FaHospitalUser } from "react-icons/fa";
 import { JSONObject } from "../lib/definitions";
 import * as Utils from "@/app/lib/utils";
 import ClientDetailsForm from "./ClientDetails";
+import * as AppStore from '@/app/lib/appStorage';
 import useAppContext from "../contexts";
+import * as Constant from '@/app/lib/constants';
+
 
 export default function ClientCard( {client}: {client: JSONObject}) {
 
-	const { selectedClient, setSelectedClient } = useAppContext();
-	
 	const [ isVisible, setIsVisible ] = useState<boolean>(false);
-console.log("============ ClientCard");
-console.log(client);
-	
-    const [clientData, setClientData] = useState(client);
+	const [ clientData, setClientData ] = useState<JSONObject>(client);
+
 	const lastActivityDate = ( clientData.activities?.length > 0 ) ? Utils.formatDate(new Date(clientData.activities[clientData.activities.length - 1].date)) : ["[no activity]"];
 
+	const { mainUi, setMainUi } = useAppContext();
+
+
 	const clientDetaislModelOpen = () => {
-		setSelectedClient(client._id);
+		AppStore.setSelectedClient(client._id);
+		// setMainUi(Constant.UI_CLIENT_DETAILS);
 		setIsVisible( true );
 	}
 
 	const clientDetailModalClose = () => {
-		setSelectedClient("");
+		AppStore.setSelectedClient("");
 		setIsVisible( false );
 	};
+
+
+	const handleOnUpdate = () => {
+		setClientData( AppStore.getClientById(client._id)! );
+	}
 
 	return (
 		<>
@@ -48,9 +55,7 @@ console.log(client);
 		<Modal isVisible={isVisible} onClose={clientDetailModalClose} >
 			<div className="bg-white w-screen h-screen p-2">
 				<div className="font-semibold cursor-pointer" onClick={(e) => { clientDetailModalClose() } }>X</div>
-				{/* <div>{JSON.stringify(client)}</div> */}
-
-				<ClientDetailsForm client={selectedClient!}/>
+				<ClientDetailsForm client={clientData} onUpdated={() => handleOnUpdate()}/>
 			</div>
 		</Modal>
 		</>

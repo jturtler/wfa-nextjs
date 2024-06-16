@@ -2,6 +2,8 @@ import * as Utils from '@/app/lib/utils';
 import { JSONObject, ResponseData } from './definitions';
 import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 
+import { v4 as uuidv4 } from 'uuid';
+
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 const MONGODB_DB = process.env.MONGODB_DB as string;
@@ -77,17 +79,20 @@ export const findDocument = async(colectionName: string, payloadJson: JSONObject
 export const addDocument = async(colectionName: string, payloadJson: JSONObject) : Promise<ResponseData> => {
 	try {
 		const { db } = await connectToDatabase();
-		
-		var doc = await db.collection(colectionName).insertOne(payloadJson.payload);
-
-		payloadJson.payload._id = doc.insertedId;
-
+		// payloadJson._id = new ObjectId(uuidv4());
+		console.log("========= addDocument 1");
+		// payloadJson.createdAt = new Date();
+		console.log(payloadJson);
+		var doc = await db.collection(colectionName).insertOne(payloadJson);
+		payloadJson._id = doc.insertedId;
 		return {
 			success: true,
-			data: payloadJson.payload
+			data: payloadJson
 		}
 	}
 	catch(ex) {
+		console.log("========= addDocument ERROR");
+		console.log(ex);
 		return {
 			success: false,
 			message: Utils.getErrMessage(ex)

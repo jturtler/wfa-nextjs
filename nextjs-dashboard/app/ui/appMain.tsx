@@ -2,7 +2,6 @@
 
 import LoginForm from "./login-form";
 import Listing from "./listing";
-import { useAuth } from '../contexts/AuthContext';
 import SectionTop from "./sectionTop";
 import useAppContext from "../contexts";
 import * as Constant from "@/app/lib/constants";
@@ -10,7 +9,7 @@ import ClientForm from "./ClientForm";
 
 export default function AppMain() {
 
-	const { user, mainUi } = useAppContext();
+	const { mainUi, setMainUi } = useAppContext();
 
 	console.log( 'AppMain Rendering: ' );
 
@@ -22,6 +21,9 @@ export default function AppMain() {
 					<SectionTop></SectionTop>
 					<Listing></Listing>
 				</>}
+				
+			{mainUi == Constant.UI_ADD_CLIENT_FORM && <ClientForm handleCloseForm={() => setMainUi(Constant.UI_CLIENT_LIST)} /> }
+
 			
 			{(mainUi == Constant.UI_LOGIN_PAGE ) && <>
 				<div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">

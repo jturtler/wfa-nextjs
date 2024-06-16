@@ -1,24 +1,23 @@
 'use client';
 
-// import { useLoginUserContext } from "../contexts/loginUserContext";
 import { IoMenuOutline } from "react-icons/io5";
 import Modal from "./modal";
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
 import useAppContext from "../contexts";
 import * as Constant from "@/app/lib/constants";
+import * as AppStore from '@/app/lib/appStorage';
+
 
 export default function SectionTop() {
 
-	// const { username } = useLoginUserContext();
+	const { setMainUi } = useAppContext();
 	
-	const { user, logout, setMainUi } = useAppContext();
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 
 	const handleOnLogout = () => {
 		const ok = confirm("Are you sure you want to log-out ?");
 		if( ok ) {
-			logout();
+			AppStore.setUser(null);
 			setMainUi(Constant.UI_LOGIN_PAGE);
 		}
 	}
@@ -31,7 +30,7 @@ export default function SectionTop() {
 			<div className="divTopNav h-[50px] bg-blue-700 p-1 grid grid-cols-2">
 				<div className="flex justify-start items-center">
 					<IoMenuOutline className="text-2xl font-bold cursor-pointer hover:bg-blue-500" onClick={(e) => setIsVisible(true)} />
-					<div className="text-white ml-2 font-light"><span>[ {user?.username} ]</span></div>
+					<div className="text-white ml-2 font-light"><span>[ {AppStore.getUser()?.username} ]</span></div>
 				</div>
 				<div>
 				</div>

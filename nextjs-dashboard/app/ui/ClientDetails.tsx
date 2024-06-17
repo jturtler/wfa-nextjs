@@ -18,7 +18,7 @@ export default function ClientDetailsForm ({ client, onUpdated }: {client: JSONO
     };
 
     return (
-        <div className="max-w-lg mx-auto main-view">
+        <div className="max-w-xl mx-auto main-view">
             <div className="flex border-b border-gray-200">
                 <button
                     onClick={() => handleTabClick('clientDetailsTab')}

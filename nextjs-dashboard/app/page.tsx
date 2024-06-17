@@ -6,9 +6,9 @@ import { MainUiProvider } from './contexts/MainUiContext';
 export default function Page() {
   return (
     <main className="mainPage">
-        <MainUiProvider>
-              <AppMain></AppMain>
-        </MainUiProvider>
+      <MainUiProvider>
+        <AppMain></AppMain>
+      </MainUiProvider>
     </main>
   );
 }

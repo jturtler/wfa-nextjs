@@ -11,14 +11,14 @@ export default function ActivityList({client, handleOnUpdated}: {client: JSONObj
     const [selectedActivity, setSelectedActivity] = useState<JSONObject | null>(null);
    
     return (
-        <div className="divMainList m-1 grid h-[calc(100vh-110px)] flex-1 content-start gap-1 overflow-x-auto border-2 p-3 border-gray-300 md:grid-cols-2 rounded-lg">
+        <div className="divMainList h-[calc(100vh-150px)] flex-1 content-start gap-1 overflow-x-auto border-spacing-2 scroll-m-1 rounded">
             {selectedActivity == null && list && list.length > 0 && list.map((t: JSONObject) => (
                 <div 
                     key={`${t.id}`} 
                     onClick={(e) => setSelectedActivity(t)}
-                    className="cursor-pointer p-3 border bg-white border-slate-300 my-3 flex justify-between items-start rounded">
+                    className="cursor-pointer p-4 border border-slate-300 m-3 flex justify-between items-start rounded bg-gray-200 text-gray-700 shadow-lg hover:bg-blue-200">
                     <div className="flex flex-row">
-                        <div className="mx-2">
+                        <div className="mx-5">
                             <div className="font-bold">{t.program}</div>
                             <div>{t.note}</div>
                             <div>{Utils.formatDate(new Date(t.date))}</div>

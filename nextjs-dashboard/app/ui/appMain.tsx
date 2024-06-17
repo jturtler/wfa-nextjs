@@ -6,24 +6,39 @@ import SectionTop from "./sectionTop";
 import useAppContext from "../contexts";
 import * as Constant from "@/app/lib/constants";
 import ClientForm from "./ClientForm";
+import Footer from "./Footer";
+import ClientDetailsForm from "./ClientDetails";
+import * as AppStore from '@/app/lib/appStorage';
+import { useState } from "react";
 
 export default function AppMain() {
 
 	const { mainUi, setMainUi } = useAppContext();
+
+	const [refreh, setRefresh] = useState(false);
+	const handleOnUpdate = () => {
+		// setClientData( AppStore.getClientById(client._id)! );
+		setRefresh(!refreh);
+	}
 
 	console.log( 'AppMain Rendering: ' );
 
 	return (
 		<div className="divMain">
 			
-			{(mainUi == Constant.UI_CLIENT_LIST ) && 
+			{(mainUi != Constant.UI_LOGIN_PAGE ) && 
 				<>
 					<SectionTop></SectionTop>
-					<Listing></Listing>
+					{mainUi == Constant.UI_CLIENT_LIST && <>
+						<Listing></Listing>
+						
+					</>}
+
+					{mainUi == Constant.UI_CLIENT_DETAILS && <ClientDetailsForm client={AppStore.getSelectedClient()!} onUpdated={() => handleOnUpdate()}/>}
+
+					{mainUi == Constant.UI_ADD_CLIENT_FORM && <ClientForm handleCloseForm={() => setMainUi(Constant.UI_CLIENT_LIST)} /> }
 				</>}
 				
-			{mainUi == Constant.UI_ADD_CLIENT_FORM && <ClientForm handleCloseForm={() => setMainUi(Constant.UI_CLIENT_LIST)} /> }
-
 			
 			{(mainUi == Constant.UI_LOGIN_PAGE ) && <>
 				<div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">
@@ -31,8 +46,9 @@ export default function AppMain() {
 						<LoginForm></LoginForm>
 					</div>
 				</div>
-				<div className="absolute bottom-0 left-0 h-30 w-screen p-2 bg-gray-900 text-white text-xs">Version 0.1.1 <span className="text-gray-400">[2024-06-05]</span></div>
 			</>}
+
+			<Footer />
 
 		</div>
 	);

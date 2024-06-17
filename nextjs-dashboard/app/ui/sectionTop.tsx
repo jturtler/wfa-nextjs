@@ -6,11 +6,12 @@ import { useState } from "react";
 import useAppContext from "../contexts";
 import * as Constant from "@/app/lib/constants";
 import * as AppStore from '@/app/lib/appStorage';
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 
 export default function SectionTop() {
 
-	const { setMainUi } = useAppContext();
+	const { mainUi, setMainUi } = useAppContext();
 	
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -29,7 +30,8 @@ export default function SectionTop() {
 		<>
 			<div className="divTopNav h-[50px] bg-blue-700 p-1 grid grid-cols-2">
 				<div className="flex justify-start items-center">
-					<IoMenuOutline className="text-2xl font-bold cursor-pointer hover:bg-blue-500" onClick={(e) => setIsVisible(true)} />
+					{mainUi == Constant.UI_CLIENT_LIST && <IoMenuOutline className="text-2xl font-bold cursor-pointer hover:bg-blue-500" onClick={(e) => setIsVisible(true)} />}
+					{mainUi != Constant.UI_CLIENT_LIST && <IoMdArrowRoundBack  className="text-2xl font-bold cursor-pointer hover:bg-blue-500" onClick={(e) => setMainUi(Constant.UI_CLIENT_LIST)} />}
 					<div className="text-white ml-2 font-light"><span>[ {AppStore.getUser()?.username} ]</span></div>
 				</div>
 				<div>

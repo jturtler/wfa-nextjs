@@ -77,9 +77,7 @@ export default function ClientForm({ client = {} as JSONObject, handleOnUpdated 
         if ( client._id ) {
             return ( allowToEdit ) ? "Edit Client" : "Client Details";
         }
-
         return "Add Client";
-        
     }
 
     

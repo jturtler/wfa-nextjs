@@ -50,21 +50,22 @@ export default function Listing() {
 
 		{ loading && <FaSpinner className="text-9xl" /> }
 			
-		{(!loading && mainUi == Constant.UI_CLIENT_LIST ) && <div className="divMiddleContent flex">
+		{(!loading  ) && <div className="divMiddleContent flex">
 			<div className="divSiceNav w-10 hidden bg-gray-700 text-gray-300 p-1">m1</div>
 				<div className="divMainList m-1 grid h-[calc(100vh-90px)] flex-1 content-start gap-1 overflow-x-auto border-0 border-gray-400 md:grid-cols-2">
 					{ clientList != null && clientList?.map( (client: JSONObject, index: number) => (
-						<ClientCard key={client._id} client={client} />
-					))
+							<ClientCard key={client._id} client={client}  />
+						))
 					}
 				</div>
-
-				 {/* <!-- Floating Button --> */}
-				 { AppStore.getSelectedClient() == null && <button className="fixed bottom-16 right-5 w-14 h-14 bg-sal bg-yellow-500 hover:bg-yellow-600 text-black rounded-full shadow-lg flex items-center justify-center text-2xl"
-                	onClick={()=> setMainUi(Constant.UI_ADD_CLIENT_FORM)}> + </button>}
 			</div> }
+
 			
-		<div className="divBottomTop h-[30px] bg-gray-900 p-1 text-xs text-white">Version 1.2.0</div>
+			{/* <!-- Floating Button --> */}
+			<button className="fixed bottom-16 right-5 w-14 h-14 bg-sal bg-yellow-500 hover:bg-yellow-600 text-black rounded-full shadow-lg flex items-center justify-center text-2xl"
+				onClick={()=> setMainUi(Constant.UI_ADD_CLIENT_FORM)}> + </button>
+			
+		{/* <div className="divBottomTop h-[30px] bg-gray-900 p-1 text-xs text-white">Version 1.2.0</div> */}
 	</div>
 	);
 }

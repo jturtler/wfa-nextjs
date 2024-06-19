@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import Modal from "./model";
+import Modal from "./modal";
 
 export default function ClientCard( { client }: { client: any} ) {
 
@@ -28,7 +28,7 @@ export default function ClientCard( { client }: { client: any} ) {
 				<img className="" src="https://cdn-icons-png.flaticon.com/512/3306/3306599.png" />
 			</div>
 			</div>
-			<Modal isVisible={showModal} onClose={ () => clientDetailModalClose() }>
+			<Modal isVisible={showModal} onClose={clientDetailModalClose}>
 				<div className="bg-white w-screen h-screen">
 					<div className="font-bold cursor-pointer" onClick={ (e) => clientDetailModalClose() }>X</div>
 					<div>{JSON.stringify(client)}</div>

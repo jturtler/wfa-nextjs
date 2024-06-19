@@ -1,21 +1,39 @@
 'use client';
 
+import { useEffect, useState } from "react";
 import { useClientListContext } from "../contexts/clientListContext";
-import { useLoginUserContext } from "../contexts/loginUserContext";
 import ClientCard from "./clientCard";
+import SectionTop from "./sectionTop";
 
 export default function Listing() {
 
-	const { clientList } = useClientListContext();
-	const { username } = useLoginUserContext();
+	const [ clientList, setClientList ] = useState<Array<any>>([]);
+	// const { clientList } = useClientListContext();
 
+	const getClientsList = () => {
+		fetch( 'clients.json', {
+			headers : { 
+				'Content-Type': 'application/json',
+				'Accept': 'application/json'
+			  }
+		}).then( function( resp ) {
+			console.log( resp );
+			return resp.json();
+		}).then( function( returnJson ) {
+			console.log( returnJson );
+			setClientList( returnJson );
+		});
+	};
+
+	useEffect( () => {
+		getClientsList();
+	}, []);
+	
 	console.log( 'Listing rendering' );
 
 	return (
 		<div className="h-[100vh] overflow-hidden">
-			<div className="divTopNav h-[30px] bg-blue-300 p-1 text-white">
-				INFO - { username }
-			</div>
+			<SectionTop></SectionTop>
 			<div className="divMiddleContent flex">
 				<div className="divSiceNav w-10 hidden bg-gray-700 text-gray-300 p-1">m1</div>
 				<div className="divMainList m-1 grid h-[calc(100vh-68px)] flex-1 content-start gap-1 overflow-x-auto border-0 border-gray-400 md:grid-cols-2">

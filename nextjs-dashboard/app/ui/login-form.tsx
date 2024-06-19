@@ -26,11 +26,12 @@ export default function LoginForm() {
     setPin( pinTemp );    
     setLoggedIn( true );
 
-		getClientsList();
+		//getClientsList();
 
     console.log( 'loginBtn Clicked - In state set: username, pin, loggedIn ');
   };
 
+  /*
   const getClientsList = () => {
 		fetch( 'clients.json', {
 			headers : { 
@@ -45,7 +46,7 @@ export default function LoginForm() {
 			setClientList( returnJson );
 		});
 	};
-
+  */
 
   return (
     <form className="space-y-3">

@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import Modal from "./modal";
+import ClientDetail from "./clientDetail";
 
 export default function ClientCard( { client }: { client: any} ) {
 
@@ -29,10 +30,7 @@ export default function ClientCard( { client }: { client: any} ) {
 			</div>
 			</div>
 			<Modal isVisible={showModal} onClose={clientDetailModalClose}>
-				<div className="bg-white w-screen h-screen">
-					<div className="font-bold cursor-pointer" onClick={ (e) => clientDetailModalClose() }>X</div>
-					<div>{JSON.stringify(client)}</div>
-				</div>
+				<ClientDetail onClose={clientDetailModalClose} client={client}></ClientDetail>
 			</Modal>
 		</Fragment>
 	);

@@ -68,6 +68,7 @@ export default function LoginForm() {
                 id="username"
                 type="username"
                 name="username"
+                value={username}
                 placeholder="Enter your username"
                 required
                 onChange={ (e) => { usernameTemp = e.target.value; } }
@@ -88,6 +89,7 @@ export default function LoginForm() {
                 id="pin"
                 type="password"
                 name="pin"
+                value={pin}
                 placeholder="Enter pin"
                 required
                 minLength={4}

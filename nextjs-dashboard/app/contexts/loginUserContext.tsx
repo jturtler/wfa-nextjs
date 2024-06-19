@@ -15,8 +15,8 @@ const LoginUserContext = createContext<LoginUser | undefined>(undefined);
 
 export function LoginUserContextWrapper( { children } : { children: React.ReactNode; } ) 
 {
-	let [ username, setUsername ] = useState( '' );
-	let [ pin, setPin ] = useState( '' );
+	let [ username, setUsername ] = useState( 'james' );
+	let [ pin, setPin ] = useState( '1122' );
 	// let [ loggedIn, setLoggedIn ] = useState( false );
 
 	return (

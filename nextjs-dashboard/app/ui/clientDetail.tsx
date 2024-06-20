@@ -1,4 +1,7 @@
 import { useState } from "react";
+import SectionTop from "./sectionTop";
+import ClientProfile from "./clientProfile";
+import ClientActivities from "./clientActivities";
 
 export default function ClientDetail( { onClose, client }: { onClose: () => void, client: any } ) {
 
@@ -11,14 +14,18 @@ export default function ClientDetail( { onClose, client }: { onClose: () => void
 
 	return ( 
 		<div className="bg-white w-screen h-screen">
-		<div className="font-bold cursor-pointer" onClick={onClose}>X</div>
-		<div className="mx-auto w-11/12">
+		<SectionTop menuIconMode={false} backArrowClick={onClose}></SectionTop>
+
+		<div className="mx-auto w-11/12 mt-1">
 			<div className="flex">
-			<button className={ `${ activeTab === 'tab1' ? tabStyleActive: tabStyleInactive } flex-1 p-2` } onClick={() => setActiveTab('tab1')}>Tab1</button>
-			<button className={ `${ activeTab === 'tab2' ? tabStyleActive: tabStyleInactive } flex-1 p-2` } onClick={() => setActiveTab('tab2')}>Tab2</button>
+			<button className={ `${ activeTab === 'tab1' ? tabStyleActive: tabStyleInactive } flex-1 p-2` } onClick={() => setActiveTab('tab1')}>Client</button>
+			<button className={ `${ activeTab === 'tab2' ? tabStyleActive: tabStyleInactive } flex-1 p-2` } onClick={() => setActiveTab('tab2')}>Activities</button>
 				
 			</div>
-			<div className="bg-orange-50 p-4">Content: { JSON.stringify(client)}</div>
+			<div className="bg-orange-50 p-4">
+			{ ( activeTab === 'tab1' ) ? <ClientProfile client={client}></ClientProfile> : <></> }
+			{ ( activeTab === 'tab2' ) ? <ClientActivities activities={client.activities}></ClientActivities> : <></> }
+			</div>
 		</div>
 	</div>
 

@@ -14,19 +14,18 @@ export function ClientListContextWrapper( { children } : { children: React.React
 {
 	let [ clientList, setClientList ] = useState<Array<any>>( [] );
 
+
 	const updateClientProfile = ( id: string, client: any ) => {
 		let newArr: Array<any>  = [...clientList]; // copying the old datas array
 
 		let currClient = newArr.find( ( item:any ) => { return (item._id === id); } );
 		if (!currClient) return;
 
-		currClient.clientDetails = client.clientDetails;
-
-		//Object.keys(currClient).forEach( ( key ) => delete currClient[key] );
-		//Object.keys(client).forEach( ( key ) => { currClient[key] = client[key]; } );
+		currClient.clientDetails = client.clientDetails;    //Object.keys(currClient).forEach( ( key ) => delete currClient[key] );  Object.keys(client).forEach( ( key ) => { currClient[key] = client[key]; } );
 
   		setClientList(newArr);
 	};
+
 
 	return (
 		<ClientListContext.Provider value={ {clientList, setClientList, updateClientProfile } }>

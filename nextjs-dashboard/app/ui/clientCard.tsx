@@ -1,10 +1,14 @@
 import { Fragment, useState } from "react";
 import Modal from "./modal";
 import ClientDetail from "./clientDetail";
+import { useClientAddFavShowContext } from "../contexts/clientAddFavContext";
 
 export default function ClientCard( { client, option }: { client: any, option: any} ) {
 
 	const [ showModal, setShowModal ] = useState<boolean>(false);
+
+	const { setClientAddFavShow } = useClientAddFavShowContext();
+
 
 	// const clickableCss = ( option.clickable ) ? 'hover:bg-blue-200': '';
 
@@ -13,7 +17,10 @@ export default function ClientCard( { client, option }: { client: any, option: a
 	};
 
 	const setShowModalWarpper = ( isTrue: boolean ) => {
-		if ( option.clickable ) setShowModal(isTrue);
+		if ( option.clickable ) {
+			setShowModal(isTrue);
+			setClientAddFavShow( !isTrue );
+		}
 	};
 
 	console.log( 'rendering ClientCard' );

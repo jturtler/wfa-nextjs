@@ -1,10 +1,12 @@
 'use client';
 
 import LoginForm from "./login-form";
-import Listing from "./listing";
+import Listing from "./clientListing";
 import { useState } from "react";
 import { useLoggedInContext } from "../contexts/loggedInContext";
 import { ClientListContextWrapper } from "../contexts/clientListContext";
+import ClientListing from "./clientListing";
+import { ClientAddFavShowContextWrapper } from "../contexts/clientAddFavContext";
 
 export default function AppMain() {
 
@@ -20,7 +22,9 @@ export default function AppMain() {
 		<div className="divMain">
 			{
 				(loggedIn) ? (
-						<Listing></Listing>
+					<ClientAddFavShowContextWrapper>
+						<ClientListing></ClientListing>
+					</ClientAddFavShowContextWrapper>
 				) : (
 					<>
 						<div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">

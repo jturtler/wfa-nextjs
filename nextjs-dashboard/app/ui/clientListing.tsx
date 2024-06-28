@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import { useClientListContext } from "../contexts/clientListContext";
 import ClientCard from "./clientCard";
 import SectionTop from "./sectionTop";
+import ClientAddFavBtn from "./clientAddFavBtn";
+import { useClientAddFavShowContext } from "../contexts/clientAddFavContext";
 
-export default function Listing() {
+export default function ClientListing() {
 
 	// const [ clientList, setClientList ] = useState<Array<any>>([]);
 	const { clientList, setClientList } = useClientListContext();
+	const { setClientAddFavShow } = useClientAddFavShowContext();	
 
 	const getClientsList = () => {
 		fetch( 'clients.json', {
@@ -27,6 +30,7 @@ export default function Listing() {
 
 	useEffect( () => {
 		getClientsList();
+		setClientAddFavShow(true);
 	}, []);
 	
 	console.log( 'Listing rendering' );
@@ -41,7 +45,8 @@ export default function Listing() {
 						<ClientCard client={client} key={index} option={ { clickable: true } }></ClientCard>
 					))}
 				</div>
-			</div>
+				<ClientAddFavBtn></ClientAddFavBtn>
+			</div>			
 			<div className="divBottomTop h-[30px] bg-gray-900 p-1 text-xs text-white">Version 1.2.0</div>
 		</div>
 	);

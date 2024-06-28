@@ -3,6 +3,7 @@ import SectionTop from "./sectionTop";
 import ClientProfile from "./clientProfile";
 import ClientActivities from "./clientActivities";
 import ClientCard from "./clientCard";
+import { ActivityAddFavShowContextWrapper } from "../contexts/activityAddFavContext";
 
 export default function ClientDetail( { onClose, client }: { onClose: () => void, client: any } ) {
 
@@ -27,7 +28,7 @@ export default function ClientDetail( { onClose, client }: { onClose: () => void
 			</div>
 			<div className="bg-orange-50 p-1 h-[calc(100vh-160px)]">
 			{ ( activeTab === 'tab1' ) ? <ClientProfile client={client}></ClientProfile> : <></> }
-			{ ( activeTab === 'tab2' ) ? <ClientActivities activities={client.activities}></ClientActivities> : <></> }
+			{ ( activeTab === 'tab2' ) ? <ActivityAddFavShowContextWrapper><ClientActivities activities={client.activities}></ClientActivities></ActivityAddFavShowContextWrapper> : <></> }
 			</div>
 		</div>
 	</div>

@@ -38,7 +38,7 @@ export default function Listing() {
 				<div className="divSiceNav w-10 hidden bg-gray-700 text-gray-300 p-1">m1</div>
 				<div className="divMainList m-1 grid h-[calc(100vh-68px)] flex-1 content-start gap-1 overflow-x-auto border-0 border-gray-400 md:grid-cols-2">
 					{ clientList.map( (client, index) => (
-						<ClientCard client={client} key={index}></ClientCard>
+						<ClientCard client={client} key={index} option={ { clickable: true } }></ClientCard>
 					))}
 				</div>
 			</div>

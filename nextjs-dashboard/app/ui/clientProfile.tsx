@@ -38,9 +38,9 @@ export default function ClientProfile({ client }: { client: any }) {
 	return (
 		<>
 			<div className="bg-gray-100">
-				<div className="w-full shadow-md rounded-md bg-white min-w-[600px] min-h-[400px] p-4 m-2">
+				<div className="w-full shadow-md rounded-md bg-white min-w-[300px] min-h-[400px] p-4 m-2">
 					<div className="relative flex items-center p-5">
-						<h1 className="absolute left-1/2 transform -translate-x-1/2 text-2xl font-bold">Client Profile</h1>
+						<h1 className="absolute text-2xl font-bold">Client Profile</h1>
 						{ (!editMode) ? <div className="ml-auto cursor-pointer hover:bg-blue-200" onClick={ (e) => setEditMode(true)}>
 							<img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" width="20"></img>
 						</div> : <></>

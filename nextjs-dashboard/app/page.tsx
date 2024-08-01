@@ -7,15 +7,19 @@ import LoginForm from './ui/login-form';
 import AppMain from './ui/appMain';
 import { LoggedInContextWrapper } from './contexts/loggedInContext';
 import { LoginUserContextWrapper } from './contexts/loginUserContext';
+import { Provider } from "react-redux";
+import { store } from "@/app/redux/rootStore";
 
 export default function Page() {
   return (
+    <Provider store={store}>
     <main className="mainPage">
-      <LoggedInContextWrapper>
-        <LoginUserContextWrapper>
-          <AppMain></AppMain>
-        </LoginUserContextWrapper>
-      </LoggedInContextWrapper>    
+        <LoggedInContextWrapper>
+          <LoginUserContextWrapper>
+            <AppMain></AppMain>
+          </LoginUserContextWrapper>
+        </LoggedInContextWrapper>    
     </main>
+    </Provider>
   );
 }

@@ -1,11 +1,18 @@
 import { useState } from "react";
 import SectionTop from "./sectionTop";
 import { Button } from "./button";
+import { useSelector, useDispatch } from 'react-redux';
+import { AppDispatch, RootState  } from "../redux/rootStore";
+// import { increaseCount } from "../redux/ations";
 
 export default function ActivityDetail( { onClose, activity }: { onClose: () => void, activity: any } ) {
 
 	const [ activeTab, setActiveTab ] = useState( 'tab1' );
-	const [ btnClickCount, setbtnClickCount ] = useState( 0 );
+	//const [ btnClickCount, setbtnClickCount ] = useState( 0 );
+	// useSelector <-- to read redux value
+	// useDispatch <-- to save value on redux
+	const btnClickCount = useSelector((state: RootState) => state.abdaf.count);
+	const dispatch = useDispatch<AppDispatch>();
 
 	//  (e) => ActivityDetailModalClose()
 
@@ -15,7 +22,11 @@ export default function ActivityDetail( { onClose, activity }: { onClose: () => 
 	const btnClickEvent = () => {
 
 		// Increment the state
-		setbtnClickCount( btnClickCount + 1 );
+		// setbtnClickCount( btnClickCount + 1 );
+
+		// dispatch( increaseCount( btnClickCount ) ); // <-- Action?  
+		dispatch( { type: 'increase', payload: btnClickCount } ); // <-- Action Json 
+
 	};
 
 	return ( 

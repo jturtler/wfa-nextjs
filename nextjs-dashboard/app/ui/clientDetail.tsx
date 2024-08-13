@@ -16,7 +16,7 @@ export default function ClientDetail( { onClose, client }: { onClose: () => void
 
 	return ( 
 		<div className="bg-white w-screen">
-		<SectionTop menuIconMode={false} backArrowClick={onClose}></SectionTop>
+		<SectionTop menuIconMode={false} title="Client Details" backArrowClick={onClose}></SectionTop>
 
 		<div className="mx-auto w-11/12 mt-1">
 			<div>

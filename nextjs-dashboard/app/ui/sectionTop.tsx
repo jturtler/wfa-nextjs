@@ -5,7 +5,7 @@ import Modal from "./modal";
 import { useState } from "react";
 import { IoMenuOutline, IoArrowBack } from "react-icons/io5";
 
-export default function SectionTop( { menuIconMode, backArrowClick }: { menuIconMode:boolean, backArrowClick: () => void } ) {
+export default function SectionTop( { menuIconMode, title, backArrowClick }: { menuIconMode:boolean, title?:string, backArrowClick: () => void } ) {
 
 	const { username } = useLoginUserContext();
 	const [ showModal, setShowModal ] = useState<boolean>(false);
@@ -22,7 +22,7 @@ export default function SectionTop( { menuIconMode, backArrowClick }: { menuIcon
 						:
 						<IoArrowBack className="text-2xl font-bold cursor-pointer hover:bg-blue-500" onClick={ (e) => backArrowClick() }></IoArrowBack>
 					}
-					<div className="text-white ml-2 font-light"><span>[ {username} ]</span></div>
+					<div className="text-white ml-2 font-light"> <span className="font-semibold">{title}</span> <span className="italic text-blue-400"> [ {username} ]</span></div>
 				</div>
 				<div>
 				</div>

@@ -25,14 +25,14 @@ export default function ActivityCard( { activity }: { activity: any} ) {
 
 	return (
 		<Fragment>
-			<div className="m-2 grid min-h-[80px] cursor-pointer grid-cols-[15%_70%_15%] gap-1 rounded-lg bg-indigo-100 p-0 text-gray-700 shadow-lg hover:bg-blue-200 text-sm" onClick={ (e) => activityCardClick() }>
+			<div className="m-2 grid min-h-[50px] cursor-pointer grid-cols-[15%_70%_15%] gap-1 rounded-lg bg-indigo-100 p-0 text-gray-700 shadow-lg hover:bg-blue-200 text-sm" onClick={ (e) => activityCardClick() }>
 				<div className="flex items-center justify-center">
 					<LuActivitySquare className="min-w-[30px] max-w-[40px] min-h-[30px] max-h-[40px]"></LuActivitySquare>
 				</div>
 				<div className="p-2">
 					<div className="min-h-[20px] font-semibold">Created: {activity.date.createdLoc}</div>
 					<div className="min-h-[20px]">Activity Type: {activity.type}</div>
-					<div className="min-h-[20px]"></div>
+					<div className=""></div>
 				</div>
 				<div className="flex items-center p-1 justify-center">
 					<FaSyncAlt className="min-w-[20px] max-w-[30px] min-h-[20px] max-h-[30px] text-green-600" />

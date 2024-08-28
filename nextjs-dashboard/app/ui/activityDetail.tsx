@@ -40,11 +40,10 @@ export default function ActivityDetail( { onClose, activity }: { onClose: () => 
 				{ ( activeTab === 'tab1' ) ? <div className="h-fit"><JsonView value={ activity } collapsed={true} /></div> : <></> }
 				{ ( activeTab === 'tab2' ) ? <ActivityJsonEval activity={activity}></ActivityJsonEval> : <></> }
 				{ ( activeTab === 'tab3' ) ? <div>
-					<Button className="flex-1 justify-center mx-5" onClick={ (e) => { btnClickEvent() } }>
+					<Button className="flex-1 justify-center mx-5 hidden" onClick={ (e) => { btnClickEvent() } }>
 						Click
 					</Button>
-					<div>Click Count: { btnClickCount }</div>
-
+					<div className="hidden">Click Count: { btnClickCount }</div>
 				</div> : <></> }
 
 			</div>
